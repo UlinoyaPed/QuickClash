@@ -1,0 +1,4 @@
+quickclash:
+  sublink: https://api.tsutsu.one/sub?target=clash&insert=true&new_name=true&scv=true&udp=true&exclude=&include=&url=https%3A%2F%2Fweb.coo.wiki%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3Dbc4e1e0583bce1dd2d5c71d9a5d8695b&config=https://github.com/UlinoyaPed/ShellClash/raw/dev/rules/ShellClash.ini
+  port: 80
+  secret: 123456
