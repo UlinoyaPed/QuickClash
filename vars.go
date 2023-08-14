@@ -7,6 +7,7 @@ const (
 	QuickClashSubYml = "yaml/QuickClashSub.yaml"
 	ClashMetaCore    = "clash.meta.exe"
 	ClashCore        = "clash.exe"
+	WebUIUrl         = "https://ghproxy.com/https://github.com/UlinoyaPed/QuickClash/releases/download/v0.2/web.zip"
 )
 
 var (

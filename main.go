@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/dablelv/go-huge-util/zip"
 	"github.com/gin-gonic/gin"
 	"github.com/gookit/color"
 	"github.com/gookit/config/v2"
@@ -42,6 +43,14 @@ func cancelProxy() {
 
 func main() {
 	var err error
+
+	_, err = os.Stat("web/")
+	if err != nil {
+		color.BgLightBlue.Println("正在下载WebUI，请稍等")
+		Download(WebUIUrl, "web.zip")
+		color.BgLightBlue.Println("正在解压文件")
+		zip.Unzip("web.zip", ".")
+	}
 	//设置Gin为发布模式
 	gin.SetMode(gin.ReleaseMode)
 	// 创建一个Gin实例
