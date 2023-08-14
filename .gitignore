@@ -12,6 +12,7 @@
 *.out
 releases/
 yaml/QuickClashSub.yaml
+*.zip
 
 # Dependency directories (remove the comment below to include it)
 # vendor/

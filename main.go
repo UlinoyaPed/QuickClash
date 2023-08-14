@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/signal"
 	"time"
 
 	"github.com/dablelv/go-huge-util/zip"
@@ -22,6 +23,7 @@ func init() {
 	_, err := os.Stat(QuickClashYml)
 	// 如果文件不存在则下载
 	if err != nil {
+		os.Mkdir("config", os.ModePerm)
 		color.FgLightBlue.Println("配置文件不存在，正在下载...")
 		Download(RepoBaseUrl+QuickClashYml, QuickClashYml)
 	}
@@ -88,6 +90,7 @@ func main() {
 			color.BgLightBlue.Println("您没有填写 quickclash.sublink 字段，请在此处输入")
 			fmt.Scanln(&SubUrl)
 		}
+		os.Mkdir("yaml", os.ModePerm)
 		color.BgLightBlue.Println("正在下载配置文件，请稍等")
 		err = Download(SubUrl, QuickClashSubYml)
 		if err != nil {
@@ -149,5 +152,9 @@ func main() {
 	color.BgLightRed.Printf("管理面板已启动，请访问 localhost%s\n", GinPort)
 
 	//		阻止主协程退出，以保持Gin服务的运行
-	select {}
+	//select {}
+	c := make(chan os.Signal)
+	signal.Notify(c)
+	s := <-c
+	fmt.Println("get signal: ", s)
 }
