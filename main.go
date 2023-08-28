@@ -35,6 +35,7 @@ func init() {
 		panic(err)
 	}
 
+	//多语言
 	DefaultLang := config.String("quickclash.lang")
 	Languages := map[string]string{
 		"en":    "English",
@@ -99,6 +100,8 @@ func main() {
 			color.BgLightBlue.Println(i18n.Dtr("inputSublink"))
 			fmt.Scanln(&SubUrl)
 		}
+		SubUrl = AddHTTPSPrefix(SubUrl)
+		fmt.Println(SubUrl)
 		os.Mkdir("yaml", os.ModePerm)
 		color.BgLightBlue.Println(i18n.Dtr("downloading", i18n.Dtr("configFile")))
 		err = Download(SubUrl, QuickClashSubYml)
@@ -113,6 +116,7 @@ func main() {
 	//加载配置文件
 	err = config.LoadFiles(QuickClashSubYml)
 	if err != nil {
+		os.Remove(QuickClashSubYml)
 		panic(err)
 	}
 

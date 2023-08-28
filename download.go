@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/gookit/color"
 )
@@ -31,4 +32,11 @@ func Download(url string, filepath string) error {
 	}
 
 	return nil
+}
+
+func AddHTTPSPrefix(url string) string {
+	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
+		return "https://" + url
+	}
+	return url
 }
