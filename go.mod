@@ -1,4 +1,4 @@
-module QuickClash
+module github.com/UlinoyaPed/QuickClash
 
 go 1.19
 
@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gookit/color v1.5.3
 	github.com/gookit/config/v2 v2.2.3
+	github.com/gookit/i18n v1.1.4
 )
 
 require (
@@ -21,6 +22,7 @@ require (
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/goccy/go-yaml v1.11.0 // indirect
 	github.com/gookit/goutil v0.6.10 // indirect
+	github.com/gookit/ini/v2 v2.2.2 // indirect
 	github.com/imdario/mergo v0.3.15 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect

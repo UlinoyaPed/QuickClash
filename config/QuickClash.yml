@@ -1,4 +1,6 @@
 quickclash:
+  #语言 en zh-CN
+  lang: zh-CN
   #sublink可留空，但需要在程序运行时手动输入
   sublink: 
   #WebUI的端口
