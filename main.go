@@ -38,19 +38,30 @@ func init() {
 	//多语言
 	DefaultLang := config.String("quickclash.lang")
 	Languages := map[string]string{
+		"ara":   "العربية",
+		"de":    "Deutsch",
 		"en":    "English",
+		"fra":   "français",
+		"jp":    "日本語",
+		"kor":   "한국어",
+		"ru":    "русский",
+		"th":    "ภาษาไทย",
 		"zh-CN": "简体中文",
+		"zh-TW": "繁體中文",
 	}
 	i18n.Init("lang/", DefaultLang, Languages)
 
 }
 
 func cancelProxy() {
+	//取消代理
 	if err := SetProxy(""); err == nil {
 		color.BgLightBlue.Println(i18n.Dtr("cancelProxySuccess"))
 	} else {
 		color.BgRed.Println(i18n.Dtr("cancelProxyFail", err))
 	}
+	//等待2秒，防止按下关闭后看不清取消代理的状态
+	time.Sleep(2 * time.Second)
 }
 
 func main() {
@@ -151,9 +162,10 @@ func main() {
 	//等待2秒
 	time.Sleep(2 * time.Second)
 
+	//关闭时自动取消代理
+	defer cancelProxy()
 	//设置系统代理
 	proxy := fmt.Sprintf("127.0.0.1:%s", config.String("port"))
-	defer cancelProxy()
 	if err := SetProxy(proxy); err == nil {
 		color.BgLightBlue.Println(i18n.Dtr("setProxySuccess", proxy))
 	} else {
@@ -165,7 +177,10 @@ func main() {
 	color.BgLightRed.Println(i18n.Dtr("webUIStarted", GinPort))
 
 	//		阻止主协程退出，以保持Gin服务的运行
-	//select {}
+	Clog()
+}
+
+func Clog() {
 	c := make(chan os.Signal)
 	signal.Notify(c)
 	s := <-c

@@ -1,1 +1,2 @@
-# RepoTemplate
+# QuickClash
+

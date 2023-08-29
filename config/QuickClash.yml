@@ -1,5 +1,15 @@
 quickclash:
-  #语言 en zh-CN
+  #Language：
+  #"ara":   "العربية"
+  #"de":    "Deutsch"
+  #"en":    "English"
+  #"fra":   "français"
+  #"jp":    "日本語"
+  #"kor":   "한국어"
+  #"ru":    "русский"
+  #"th":    "ภาษาไทย"
+  #"zh-CN": "简体中文"
+  #"zh-TW": "繁體中文"
   lang: zh-CN
   #sublink可留空，但需要在程序运行时手动输入
   sublink: 
