@@ -60,8 +60,8 @@ func cancelProxy() {
 	} else {
 		color.BgRed.Println(i18n.Dtr("cancelProxyFail", err))
 	}
-	//等待2秒，防止按下关闭后看不清取消代理的状态
-	time.Sleep(2 * time.Second)
+	//等待3秒，防止按下关闭后看不清取消代理的状态
+	time.Sleep(3 * time.Second)
 }
 
 func main() {
@@ -159,17 +159,29 @@ func main() {
 	params := []string{"-f", QuickClashSubYml, "-secret", config.String("quickclash.secret")}
 	go ExecCommand(command, params)
 
-	//等待2秒
-	time.Sleep(2 * time.Second)
+	// go func(isExecNext chan bool) {
+	// 	go ExecCommand(command, params)
+	// 	execNext(isExecNext)
+	// }(isExecNext)
 
 	//关闭时自动取消代理
 	defer cancelProxy()
 	//设置系统代理
 	proxy := fmt.Sprintf("127.0.0.1:%s", config.String("port"))
-	if err := SetProxy(proxy); err == nil {
+	//err = SetProxy(proxy)
+	proxyErr := make(chan error, 1)
+	go func(proxyErr chan error) {
+		err := SetProxy(proxy)
+		proxyErr <- err
+	}(proxyErr)
+	//等待2秒，让Clash启动信息跑完
+	//time.Sleep(1 * time.Second)
+	<-IsExecNext
+	//错误处理
+	if <-proxyErr == nil {
 		color.BgLightBlue.Println(i18n.Dtr("setProxySuccess", proxy))
 	} else {
-		color.BgRed.Println(i18n.Dtr("setProxyFail", proxy, err))
+		color.BgRed.Println(i18n.Dtr("setProxyFail", proxy, <-proxyErr))
 	}
 
 	//提示信息
