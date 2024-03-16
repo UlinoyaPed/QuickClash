@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"runtime"
 	"time"
 
 	"github.com/dablelv/go-huge-util/zip"
@@ -104,8 +105,8 @@ func main() {
 		duration = time.Since(modTime)
 	}
 
-	// 如果文件不存在或超过6小时则下载
-	if errStat != nil || duration.Hours() > 6 {
+	// 如果文件不存在或超过多少小时则下载
+	if errStat != nil || duration.Hours() > config.Float("quickclash.duration") {
 		SubUrl = config.String("quickclash.sublink")
 		if SubUrl == "" {
 			color.BgLightBlue.Println(i18n.Dtr("inputSublink"))
@@ -132,12 +133,17 @@ func main() {
 	}
 
 	//检查内核
-	if config.String("quickclash.core") == "clash" {
-		Core = ClashCore
-		color.BgLightBlue.Println(i18n.Dtr("currentCore", "Clash"))
-	} else if config.String("quickclash.core") == "clash.meta" {
-		Core = ClashMetaCore
-		color.BgLightBlue.Println(i18n.Dtr("currentCore", "ClashMeta"))
+	if runtime.GOARCH == "386" || config.String("quickclash.core") == "clash.metax86" {
+		Core = ClashMetaCorex86
+		color.BgLightBlue.Println(i18n.Dtr("currentCore", "ClashMeta X86"))
+	} else if runtime.GOARCH == "amd64" {
+		if config.String("quickclash.core") == "clash" {
+			Core = ClashCore
+			color.BgLightBlue.Println(i18n.Dtr("currentCore", "Clash"))
+		} else if config.String("quickclash.core") == "clash.meta" {
+			Core = ClashMetaCore
+			color.BgLightBlue.Println(i18n.Dtr("currentCore", "ClashMeta"))
+		}
 	} else {
 		panic(color.BgRed.Sprintf(i18n.Dtr("coreSetWrong", QuickClashYml)))
 	}
@@ -147,7 +153,7 @@ func main() {
 	// 如果文件不存在则下载
 	if err != nil {
 		color.FgLightBlue.Println(i18n.Dtr("downloading", Core+" Core"))
-		err = Download(ReleaseBaseUrl+Core, Core)
+		err = DownloadWithBar(ReleaseBaseUrl+Core, Core)
 		if err != nil {
 			panic(err)
 		}

@@ -11,11 +11,15 @@ quickclash:
   #"zh-CN": "简体中文"
   #"zh-TW": "繁體中文"
   lang: zh-CN
+  
   #sublink可留空，但需要在程序运行时手动输入
   sublink: 
   #WebUI的端口
   port: 80
   #secret可为空
   secret: 123456
-  #填写 clash 或 clash.meta
+  #如果订阅文件不存在或超过多少小时则下载
+  duration: 6
+  #填写 clash clash.meta clash.metax86
+  #32位系统无论填什么都只能用metax86
   core: clash.meta

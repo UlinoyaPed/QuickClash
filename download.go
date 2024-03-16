@@ -1,12 +1,48 @@
 package main
 
 import (
+	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/gookit/color"
+	"github.com/schollz/progressbar/v3"
 )
+
+func DownloadWithBar(url string, filepath string) error {
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Create our progress bar
+	bar := progressbar.Default(resp.ContentLength)
+
+	// Create our reader and stat the size of our file
+	reader := io.TeeReader(resp.Body, bar)
+
+	// Write the body to file
+	_, err = io.Copy(out, reader)
+	if err != nil {
+		return err
+	}
+
+	bar.Add(int(resp.ContentLength))
+	bar.Finish()
+
+	return nil
+}
 
 func Download(url string, filepath string) error {
 	// HTTP GET请求 下载配置文件
