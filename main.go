@@ -16,6 +16,7 @@ import (
 )
 
 func init() {
+	cancelProxy()
 	// 设置选项支持 ENV 解析
 	config.WithOptions(config.ParseEnv)
 	// 添加驱动程序以支持yaml内容解析（除了JSON是默认支持，其他的则是按需使用）

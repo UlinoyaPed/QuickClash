@@ -8,7 +8,7 @@ const (
 	ClashMetaCore    = "clash.meta.exe"
 	ClashMetaCorex86 = "clash.meta_x86.exe"
 	ClashCore        = "clash.exe"
-	WebUIUrl         = "https://ghproxy.com/https://github.com/UlinoyaPed/QuickClash/releases/download/v0.2/web.zip"
+	WebUIUrl         = "https://mirror.ghproxy.com/https://github.com/UlinoyaPed/QuickClash/releases/download/v0.2/web.zip"
 )
 
 var (
