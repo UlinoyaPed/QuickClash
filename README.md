@@ -2,6 +2,12 @@
 
 QuickClash是一个用于快速启动Clash的工具，适用于临时设备，并且仅支持Windows操作系统。
 
+## 关于mmdb问题
+
+如果以前没用过clash，那么启动会失败，因为无mmdb且由于网络原因下载失败。
+
+可以下载[补充脚本](https://github.com/UlinoyaPed/QuickClash/releases/download/v1.3/mmdb.zip)以解决，内含2024.5.11的IP数据库（非最新的，但至少能运行起来）。
+
 ## 功能特点
 
 ### 程序流程：
