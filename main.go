@@ -172,7 +172,11 @@ func main() {
 	//关闭时自动取消代理
 	defer cancelProxy()
 	//设置系统代理
-	proxy := fmt.Sprintf("127.0.0.1:%s", config.String("port"))
+	proxyport := config.String("port")
+	if proxyport == "" {
+		proxyport = config.String("mixed-port")
+	}
+	proxy := fmt.Sprintf("127.0.0.1:%s", proxyport)
 	if err := SetProxy(proxy); err == nil {
 		color.BgLightBlue.Println(i18n.Dtr("setProxySuccess", proxy))
 	} else {
